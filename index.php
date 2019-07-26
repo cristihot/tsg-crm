@@ -9,10 +9,38 @@ $alertMessage = "";
 if (empty($_POST['email']) || empty($_POST['password'])) {
   $alertMessage = "Va rugam sa completati ambele campuri";
 } else {
-  $username = test_input($_POST['email']);
-  $password = test_input($_POST['password']);
+  $usernameSent = test_input($_POST['email']);
+  $passwordSent = test_input($_POST['password']);
 
-  
+  // Prepare our SQL, preparing the SQL statement will prevent SQL injection.
+  if ($stmt = $con->prepare('SELECT id, password FROM users WHERE username = ?')) {
+	// Bind parameters (s = string, i = int, b = blob, etc), in our case the username is a string so we use "s"
+	$stmt->bind_param('s', $usernameSent);
+	$stmt->execute();
+	// Store the result so we can check if the account exists in the database.
+	$stmt->store_result();
+	if ($stmt->num_rows > 0) {
+		$stmt->bind_result($id, $password);
+		$stmt->fetch();
+		// Account exists, now we verify the password.
+		// Note: remember to use password_hash in your registration file to store the hashed passwords.
+		if (password_verify($passwordSent, $password)) {
+			// Verification success! User has loggedin!
+			// Create sessions so we know the user is logged in, they basically act like cookies but remember the data on the server.
+			session_regenerate_id();
+			$_SESSION['loggedin'] = TRUE;
+			$_SESSION['name'] = $usernameSent;
+			$_SESSION['id'] = $id;
+			//echo 'Welcome ' . $_SESSION['name'] . '!';
+			header('Location: home.php');
+		} else {
+			echo 'Incorrect password!';
+		}
+	} else {
+		echo 'Incorrect username!';
+	}
+	$stmt->close();
+}
   
   
   //$alertMessage = "COOL";
