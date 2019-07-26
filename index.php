@@ -4,12 +4,19 @@ session_start();
 require("includes/functions.php");
 require("includes/db.php");
 
-if (!isset($_POST['username'], $_POST['password'])) {
-	$alertMessage = "Va rugam sa completati ambele campuri";
-	//die();
+$alertMessage = "";
+
+if (empty($_POST['email']) || empty($_POST['password'])) {
+  $alertMessage = "Va rugam sa completati ambele campuri";
 } else {
-	$username = test_input($_POST['username']);
-	$password = test_input($_POST['password']);
+  $username = test_input($_POST['email']);
+  $password = test_input($_POST['password']);
+
+  
+  
+  
+  //$alertMessage = "COOL";
+
 }
 	
 
@@ -38,11 +45,11 @@ if (!isset($_POST['username'], $_POST['password'])) {
 
     <!-- Login Form -->
     <form method="POST" action="index.php">
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Adresa email">
-      <input type="password" id="password" class="fadeIn third" name="login" placeholder="Parola">
+      <input type="text" class="fadeIn second" name="email" placeholder="Adresa email">
+      <input type="password" class="fadeIn third" name="password" placeholder="Parola">
       <input type="submit" id="submit" class="fadeIn fourth" value="Acces">
       <p>
-        <?php echo $alertMessage; ?>
+        <?php echo $alertMessage; $alertMessage = "";?>
       </p>
     </form>
     
