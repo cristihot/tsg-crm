@@ -5,14 +5,13 @@ require("includes/functions.php");
 require("includes/db.php");
 
 if (!isset($_POST['username'], $_POST['password'])) {
-	$alertMessage = "Completati ambele campuri...";
+	$alertMessage = "Va rugam sa completati ambele campuri";
 	//die();
 } else {
 	$username = test_input($_POST['username']);
 	$password = test_input($_POST['password']);
 }
 	
-$alertMessage = "CUCULEANU";
 
 ?>
 
@@ -42,14 +41,14 @@ $alertMessage = "CUCULEANU";
       <input type="text" id="login" class="fadeIn second" name="login" placeholder="Adresa email">
       <input type="password" id="password" class="fadeIn third" name="login" placeholder="Parola">
       <input type="submit" id="submit" class="fadeIn fourth" value="Acces">
-      <p>CUCU
-        <?php $alertMessage; ?>
+      <p>
+        <?php echo $alertMessage; ?>
       </p>
     </form>
     
     <!-- Remind Passowrd -->
     <div id="formFooter">
-      <a class="underlineHover" href="#">Forgot Password?</a>
+      <a class="underlineHover" href="#">Parola uitata?</a>
     </div>
   </div>
 </div>
