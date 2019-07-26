@@ -2,17 +2,17 @@
 session_start();
 
 require("includes/functions.php");
-require("include/db.php");
+require("includes/db.php");
 
 if (!isset($_POST['username'], $_POST['password'])) {
 	$alertMessage = "Completati ambele campuri...";
-	die();
+	//die();
 } else {
 	$username = test_input($_POST['username']);
 	$password = test_input($_POST['password']);
 }
 	
-
+$alertMessage = "CUCULEANU";
 
 ?>
 
@@ -39,10 +39,10 @@ if (!isset($_POST['username'], $_POST['password'])) {
 
     <!-- Login Form -->
     <form method="POST" action="index.php">
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-      <input type="password" id="password" class="fadeIn third" name="login" placeholder="password">
-      <input type="submit" id="submit" class="fadeIn fourth" value="Log In">
-      <p>
+      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Adresa email">
+      <input type="password" id="password" class="fadeIn third" name="login" placeholder="Parola">
+      <input type="submit" id="submit" class="fadeIn fourth" value="Acces">
+      <p>CUCU
         <?php $alertMessage; ?>
       </p>
     </form>
