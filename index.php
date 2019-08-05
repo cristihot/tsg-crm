@@ -9,11 +9,11 @@ $alertMessage = "";
 if (empty($_POST['email']) || empty($_POST['password'])) {
   $alertMessage = "Va rugam sa completati ambele campuri";
 } else {
-  $usernameSent = test_input($_POST['email']);
+  $emailSent = test_input($_POST['email']);
   $passwordSent = test_input($_POST['password']);
 
-  if($stmt = $conn->prepare('SELECT id, password FROM users WHERE username = ?')) {
-    $stmt->bind_param('s', $usernameSent);
+  if($stmt = $conn->prepare('SELECT id, password FROM users WHERE email = ?')) {
+    $stmt->bind_param('s', $emailSent);
     $stmt->execute();
     $stmt->store_result();
     if($stmt->num_rows > 0) {
@@ -22,9 +22,9 @@ if (empty($_POST['email']) || empty($_POST['password'])) {
       if (password_verify($passwordSent, $password)) {
         session_regenerate_id();
 			  $_SESSION['loggedin'] = TRUE;
-			  $_SESSION['name'] = $usernameSent;
+			  $_SESSION['name'] = $emailSent;
         $_SESSION['id'] = $id;
-        header('Location: home.php');
+        header('Location: pages/home.php');
       } else {
         $alertMessage = "Parola este incorecta!";
       }
